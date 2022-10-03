@@ -83,8 +83,7 @@ type Options struct {
 // OnResultCallback (hostResult)
 type OnResultCallback func(*result.HostResult)
 
-// ParseOptions parses the command line flags provided by a user
-func ParseOptions() *Options {
+func GetDefaultOptions() *Options {
 	options := &Options{}
 
 	flagSet := goflags.NewFlagSet()
@@ -208,14 +207,18 @@ func ParseOptions() *Options {
 		}
 		os.Exit(0)
 	}
+	return options
+}
 
-	// Validate the options passed by the user and if any
-	// invalid options have been used, exit.
+// ParseOptions parses the command line flags provided by a user
+func ParseOptions() *Options {
+
+	options := GetDefaultOptions()
+
 	err := options.ValidateOptions()
 	if err != nil {
 		gologger.Fatal().Msgf("Program exiting: %s\n", err)
 	}
-
 	return options
 }
 
