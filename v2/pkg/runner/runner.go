@@ -114,7 +114,7 @@ func NewRunner(options *Options) (*Runner, error) {
 }
 
 // RunEnumeration runs the ports enumeration flow on the targets specified
-func (r *Runner) RunEnumeration() error {
+func (r *Runner) RunEnumeration() (*result.Result, error) {
 	defer r.Close()
 
 	if privileges.IsPrivileged && r.options.ScanType == SynScan {
@@ -122,25 +122,25 @@ func (r *Runner) RunEnumeration() error {
 		if r.options.SourceIP != "" {
 			err := r.SetSourceIP(r.options.SourceIP)
 			if err != nil {
-				return err
+				return nil, err
 			}
 		}
 		if r.options.Interface != "" {
 			err := r.SetInterface(r.options.Interface)
 			if err != nil {
-				return err
+				return nil, err
 			}
 		}
 		if r.options.SourcePort != "" {
 			err := r.SetSourcePort(r.options.SourcePort)
 			if err != nil {
-				return err
+				return nil, err
 			}
 		}
 
 		err := r.scanner.SetupHandlers()
 		if err != nil {
-			return err
+			return nil, err
 		}
 		r.BackgroundWorkers()
 	}
@@ -150,7 +150,7 @@ func (r *Runner) RunEnumeration() error {
 	} else {
 		err := r.Load()
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
@@ -168,7 +168,7 @@ func (r *Runner) RunEnumeration() error {
 		// shrinks the ips to the minimum amount of cidr
 		_, targetsV4, targetsv6, err := r.GetTargetIps()
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		discoverCidr := func(cidr *net.IPNet) {
@@ -191,7 +191,7 @@ func (r *Runner) RunEnumeration() error {
 
 		// continue with other options
 		r.handleOutput(r.scanner.HostDiscoveryResults)
-		return nil
+		return nil, err
 
 	case r.options.Stream && !r.options.Passive: // stream active
 		showNetworkCapabilities(r.options)
@@ -214,7 +214,7 @@ func (r *Runner) RunEnumeration() error {
 		}
 		r.wgscan.Wait()
 		r.handleOutput(r.scanner.ScanResults)
-		return nil
+		return r.scanner.ScanResults, nil
 	case r.options.Stream && r.options.Passive: // stream passive
 		showNetworkCapabilities(r.options)
 		// create retryablehttp instance
@@ -271,13 +271,13 @@ func (r *Runner) RunEnumeration() error {
 		r.handleOutput(r.scanner.ScanResults)
 
 		// handle nmap
-		return r.handleNmap()
+		return r.scanner.ScanResults, r.handleNmap()
 	default:
 		showNetworkCapabilities(r.options)
 		// shrinks the ips to the minimum amount of cidr
 		targets, targetsV4, targetsv6, err := r.GetTargetIps()
 		if err != nil {
-			return err
+			return nil, err
 		}
 		var targetsCount, portsCount uint64
 		for _, target := range append(targetsV4, targetsv6...) {
@@ -384,7 +384,7 @@ func (r *Runner) RunEnumeration() error {
 		r.handleOutput(r.scanner.ScanResults)
 
 		// handle nmap
-		return r.handleNmap()
+		return r.scanner.ScanResults, r.handleNmap()
 	}
 }
 

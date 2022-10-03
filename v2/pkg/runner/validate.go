@@ -25,7 +25,7 @@ var (
 )
 
 // validateOptions validates the configuration options passed
-func (options *Options) validateOptions() error {
+func (options *Options) ValidateOptions() error {
 	// Check if Host, list of domains, or stdin info was provided.
 	// If none was provided, then return.
 	if options.Host == nil && options.HostsFile == "" && !options.Stdin && len(flag.Args()) == 0 {
@@ -136,7 +136,7 @@ func (options *Options) validateOptions() error {
 }
 
 // configureOutput configures the output on the screen
-func (options *Options) configureOutput() {
+func (options *Options) ConfigureOutput() {
 	// If the user desires verbose output, show verbose output
 	if options.Verbose {
 		gologger.DefaultLogger.SetMaxLevel(levels.LevelVerbose)
