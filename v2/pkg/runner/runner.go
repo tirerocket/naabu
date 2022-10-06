@@ -113,6 +113,10 @@ func NewRunner(options *Options) (*Runner, error) {
 	return runner, nil
 }
 
+func (r *Runner) GetScanner() *scan.Scanner {
+	return r.scanner
+}
+
 // RunEnumeration runs the ports enumeration flow on the targets specified
 func (r *Runner) RunEnumeration() (*result.Result, error) {
 	defer r.Close()
