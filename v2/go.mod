@@ -10,14 +10,14 @@ require (
 	github.com/projectdiscovery/clistats v0.0.8
 	github.com/projectdiscovery/fdmax v0.0.3
 	github.com/projectdiscovery/fileutil v0.0.0-20220705195237-01becc2a8963
-	github.com/projectdiscovery/goflags v0.0.9
+	github.com/projectdiscovery/goflags v0.1.1
 	github.com/projectdiscovery/gologger v1.1.4
 	github.com/projectdiscovery/iputil v0.0.0-20220625072148-037479960416
 	github.com/projectdiscovery/networkpolicy v0.0.2-0.20220525172507-b844eafc878d
 	github.com/remeh/sizedwaitgroup v1.0.0
 	go.uber.org/ratelimit v0.2.0
-	golang.org/x/net v0.0.0-20220708220712-1185a9018129
-	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
+	golang.org/x/net v0.0.0-20220909164309-bea034e7d591
+	golang.org/x/sys v0.0.0-20220728004956-3c1f35247d10
 )
 
 require (
@@ -30,7 +30,7 @@ require (
 	github.com/projectdiscovery/mapcidr v1.0.1
 	github.com/projectdiscovery/retryablehttp-go v1.0.2
 	github.com/projectdiscovery/sliceutil v0.0.0-20220625085859-c3a4ecb669f4
-	github.com/projectdiscovery/stringsutil v0.0.0-20220712170325-48c50c332cb4
+	github.com/projectdiscovery/stringsutil v0.0.1
 	github.com/projectdiscovery/uncover v0.0.6
 	github.com/stretchr/testify v1.8.0
 	go.uber.org/multierr v1.8.0
@@ -62,7 +62,7 @@ require (
 	github.com/klauspost/compress v1.11.7 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/microcosm-cc/bluemonday v1.0.19 // indirect
+	github.com/microcosm-cc/bluemonday v1.0.20 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
